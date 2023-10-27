@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Clock page</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</h:head>
+<h:body>
+    <header class="header">
+        <div>
+            <span>Nikita Kobik, P3224</span>
+            <span>variant 24927</span>
+        </div>
+    </header>
+
+    <!-- Интерактивные часы, обновляющиеся каждые 5 секунд -->
+    <div class="clock">
+        <span id="clockText">Time</span>
+    </div>
+
+    <!-- Ссылка на основную страницу приложения -->
+    <h:form>
+        <h:commandLink value="Перейти на основную страницу" action="mainPage.xhtml" />
+    </h:form>
+
+    <!-- JavaScript для отображения текущей даты и времени -->
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            document.getElementById("clockText").textContent = hours + ":" + (minutes &lt; 10 ? "0" : "") + minutes + ":" + (seconds &lt; 10 ? "0" : "") + seconds;
+        }
+        setInterval(updateClock, 5000); // Обновление каждые 5 секунд
+        updateClock(); // Инициализация времени
+    </script>
+</h:body>
+</html>
