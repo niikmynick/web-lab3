@@ -124,9 +124,10 @@ input[type="submit"] {
     transition: transform 0.2s ease-in-out;
 }
 
-#point:hover {
-    transform: scale(1.1);
-}
+/*#point:hover {*/
+/*    transform: scale(1.1);*/
+/*}*/
+
 /* Стили для модального окна */
 .modal {
     display: none;
