@@ -1,101 +1,59 @@
-import {draw} from "./src/main/webapp/script/drawer";
+import {drawPreview, drawNewPoint, safePreDraw, safeNewDraw} from "./src/main/webapp/script/drawer";
+import {getXValues} from "./src/main/webapp/script/utils";
 
-// change values
-// let selector_R = document.querySelector("#r-value");
-// let input_Y = document.querySelector("#y-value");
-//
-// selector_R.addEventListener("change", function() {
-//     draw(0, input_Y.value, selector_R.value);
-// });
-//
-//
-// input_Y.addEventListener("input", function() {
-//     let rValues = document.querySelectorAll('.rBox');
-//     let r;
-//
-//     rValues.forEach(checkbox => {
-//         if (checkbox.checked) {
-//             r = checkbox.value;
-//         }
-//     });
-//     draw(0, input_Y.value, r);
-// });
+let input_R = document.getElementById('hitInfo:r-value_input')
+let increaseButton_R = document.getElementById('hitInfo:r-value-increase')
+let decreaseButton_R = document.getElementById('hitInfo:r-value-decrease')
 
+let input_Y = document.getElementById('hitInfo:y-value')
 
-// svg listener
-//
-let svg = document.getElementById("graphSVG");
-//
-// svg.addEventListener('click', function (event) {
-//
-//     let rValues = document.querySelectorAll('.rBox');
-//     let r;
-//
-//     rValues.forEach(checkbox => {
-//         let flag = true
-//         if (checkbox.checked && flag) {
-//             r = checkbox.value;
-//             flag = false
-//         }
-//     });
-//
-//     if (r !== null) {
-//         let option = document.createElement('option');
-//         let x = (event.offsetX - 200) / (100 / r)
-//         let y = (event.offsetY - 200) / (-100 / r)
-//
-//         option.value = x.toString();
-//         document.getElementById('x-value').appendChild(option);
-//         document.getElementById('x-value').value = x;
-//
-//         document.getElementById('y-value').value = y;
-//
-//         document.getElementById('hitInfo').submit();
-//     }
-// });
-
-// form listener
+let input_X = document.getElementById('choiceX')
 
 const submitButton = document.getElementById('hitInfo:tryHit')
+
+let svg = document.getElementById("graphSVG");
+
+increaseButton_R.addEventListener('click', () => {
+    let xValues = getXValues()
+    safePreDraw(xValues, input_Y.value, input_R.value)
+});
+
+decreaseButton_R.addEventListener('click', () => {
+    let xValues = getXValues()
+    safePreDraw(xValues, input_Y.value, input_R.value)
+});
+
+input_Y.addEventListener("input", function() {
+    let xValues = getXValues()
+    safePreDraw(xValues, input_Y.value, input_R.value)
+});
+
+input_X.addEventListener("click", function() {
+    let xValues = getXValues()
+    safePreDraw(xValues, input_Y.value, input_R.value)
+});
+
+svg.addEventListener('click', function (event) {
+
+    let hiddenSubmitButton = document.getElementById('hitInfoHidden:tryHitHidden')
+    let hiddenX = document.getElementById('hitInfoHidden:x-value-hidden')
+    let hiddenY = document.getElementById('hitInfoHidden:y-value-hidden')
+    let hiddenR = document.getElementById('hitInfoHidden:r-value-hidden')
+
+    let r = input_R.value
+    let x = (event.offsetX - 200) / (100 / r)
+    let y = (event.offsetY - 200) / (-100 / r)
+
+    safeNewDraw([x], y, r)
+
+    hiddenX.value = x
+    hiddenY.value = y
+    hiddenR.value = r
+
+    hiddenSubmitButton.click()
+});
+
 submitButton.addEventListener('click', () => {
-    let xValues = []
-    if (document.getElementById('hitInfo:x-4').checked === true) {
-        xValues.push(-4)
-    }
-    if (document.getElementById('hitInfo:x-3').checked === true) {
-        xValues.push(-3)
-    }
-    if (document.getElementById('hitInfo:x-2').checked === true) {
-        xValues.push(-2)
-    }
-    if (document.getElementById('hitInfo:x-1').checked === true) {
-        xValues.push(-1)
-    }
-    if (document.getElementById('hitInfo:x0').checked === true) {
-        xValues.push(0)
-    }
-    if (document.getElementById('hitInfo:x1').checked === true) {
-        xValues.push(1)
-    }
-    if (document.getElementById('hitInfo:x2').checked === true) {
-        xValues.push(2)
-    }
-    if (document.getElementById('hitInfo:x3').checked === true) {
-        xValues.push(3)
-    }
-    if (document.getElementById('hitInfo:x4').checked === true) {
-        xValues.push(4)
-    }
-
-    let yValue = document.getElementById('hitInfo:y-value').value
-    let rValue = document.getElementById('hitInfo:r-value_input').value
-
-    draw(xValues.at(0), yValue, rValue)
-
+    let xValues = getXValues()
+    safeNewDraw(xValues, input_Y.value, input_R.value)
 })
-
-// let temp = document.getElementById('hitInfo:x-1')
-// temp.addEventListener('click', event => {
-//     console.log('click')
-//     console.log(temp.checked)
-// })
