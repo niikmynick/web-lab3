@@ -41,7 +41,7 @@ public class ResultManager {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
         String requestTime = dateFormat.format(new Date(System.currentTimeMillis()));
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
 
         ArrayList<Hit> hits = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class ResultManager {
             currentResult.setStatus( AreaChecker.isHit(hit.getX(), hit.getY(), hit.getR()) );
 
             currentResult.setRequestTime( requestTime );
-            currentResult.setScriptTime( System.nanoTime() - startTime );
+            currentResult.setScriptTime( System.currentTimeMillis() - startTime );
 
             System.out.println(currentResult);
             try {
