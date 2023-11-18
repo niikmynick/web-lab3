@@ -16,6 +16,8 @@ public class UserRequest implements java.io.Serializable {
     private boolean pos3;
     private boolean pos4;
 
+    private double x;
+
     private double y;
     private double r;
 
@@ -103,6 +105,14 @@ public class UserRequest implements java.io.Serializable {
 
     public void setPos4(boolean pos4) {
         this.pos4 = pos4;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getX() {
+        return x;
     }
 
     public double getY() {

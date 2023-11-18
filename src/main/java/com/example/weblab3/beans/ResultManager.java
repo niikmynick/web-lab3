@@ -76,23 +76,41 @@ public class ResultManager {
         for (Hit hit : hits) {
             AreaCheckerBean currentResult = new AreaCheckerBean();
 
-            currentResult.setX( hit.getX() );
-            currentResult.setY( hit.getY() );
-            currentResult.setR( hit.getR() );
-
-            currentResult.setStatus( AreaChecker.isHit(hit.getX(), hit.getY(), hit.getR()) );
-
-            currentResult.setRequestTime( requestTime );
-            currentResult.setScriptTime( System.currentTimeMillis() - startTime );
-
-            System.out.println(currentResult);
-            try {
-                DAOFactory.getInstance().getResultDAO().addNewResult( currentResult );
-            } catch (SQLException ex) {
-                System.err.println("Something went wrong when trying add new result to DB: " + ex);
-            }
-
-            results.addFirst( currentResult );
+            operateHit(requestTime, startTime, currentResult, hit);
         }
+    }
+
+    @Transactional
+    public void addResultFromGraph(UserRequest userRequest) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+        String requestTime = dateFormat.format(new Date(System.currentTimeMillis()));
+        long startTime = System.currentTimeMillis();
+
+        AreaCheckerBean currentResult = new AreaCheckerBean();
+
+        Hit hit = new Hit(userRequest.getX(), userRequest.getY(), userRequest.getR());
+
+        operateHit(requestTime, startTime, currentResult, hit);
+    }
+
+    private void operateHit(String requestTime, long startTime, AreaCheckerBean currentResult, Hit hit) {
+        currentResult.setX( hit.getX() );
+        currentResult.setY( hit.getY() );
+        currentResult.setR( hit.getR() );
+
+        currentResult.setStatus( AreaChecker.isHit(hit.getX(), hit.getY(), hit.getR()) );
+
+        currentResult.setRequestTime( requestTime );
+        currentResult.setScriptTime( System.currentTimeMillis() - startTime );
+
+        System.out.println(currentResult);
+        try {
+            DAOFactory.getInstance().getResultDAO().addNewResult( currentResult );
+        } catch (SQLException ex) {
+            System.err.println("Something went wrong when trying add new result to DB: " + ex);
+        }
+
+        results.addFirst( currentResult );
     }
 }
