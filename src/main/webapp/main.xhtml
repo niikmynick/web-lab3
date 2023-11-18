@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: niik
+  Date: 31.10.2023
+  Time: 15:07
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <title>Main page</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</h:head>
+
+<h:body>
+
+    <div class="top-div">
+
+        <div class="graph-div" id="graph-svg">
+            <ui:include src="graph.svg"/>
+        </div>
+
+        <div class="form-div">
+            <h:form id="hitInfo">
+                <label for="choiceX">X:</label>
+                <div id="choiceX">
+                    <label class="boolCheckX">
+                        -4
+                        <h:selectBooleanCheckbox id="x-4" value="#{userRequest.neg4}">
+                            <f:selectItem itemValue="true" itemLabel="-4"/>
+                            <f:selectItem itemValue="false"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        -3
+                        <h:selectBooleanCheckbox id="x-3" value="#{userRequest.neg3}">
+                            <f:selectItem itemValue="true" itemLabel="-3"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        -2
+                        <h:selectBooleanCheckbox id="x-2" value="#{userRequest.neg2}">
+                            <f:selectItem itemValue="true" itemLabel="-2"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        -1
+                        <h:selectBooleanCheckbox id="x-1" value="#{userRequest.neg1}">
+                            <f:selectItem itemValue="true" itemLabel="-1"/>
+                            <f:selectItem itemValue="false"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        0
+                        <h:selectBooleanCheckbox id="x0" value="#{userRequest.zero}">
+                            <f:selectItem itemValue="true" itemLabel="0"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        1
+                        <h:selectBooleanCheckbox id="x1" value="#{userRequest.pos1}">
+                            <f:selectItem itemValue="true" itemLabel="1"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        2
+                        <h:selectBooleanCheckbox id="x2" value="#{userRequest.pos2}">
+                            <f:selectItem itemValue="true" itemLabel="2"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        3
+                        <h:selectBooleanCheckbox id="x3" value="#{userRequest.pos3}">
+                            <f:selectItem itemValue="true" itemLabel="3"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                    <label class="boolCheckX">
+                        4
+                        <h:selectBooleanCheckbox id="x4" value="#{userRequest.pos4}">
+                            <f:selectItem itemValue="true" itemLabel="4"/>
+                        </h:selectBooleanCheckbox>
+                    </label>
+
+                </div>
+
+                <label for="y-value">Y: </label>
+                <h:inputText id="y-value"
+                             autocomplete="off"
+                             required="true"
+                             thousandSeparator="false"
+                             minValue="-3"
+                             maxValue="3"
+                             decimalSeparator="."
+                             decimalPlaces="3"
+                             converterMessage="Введите число от -3 до 3"
+                             value="#{userRequest.y}"
+                />
+
+                <label for="r-value">R:</label>
+                <p:spinner id="r-value"
+                           value="${userRequest.r}"
+                           min="0.1"
+                           max="4"
+                           stepFactor="0.1"
+                           decimalSeparator="."
+                />
+
+<!--                <div class="spinner-container">-->
+<!--                    <h:inputText id="r-value" value="${userRequest.r}" />-->
+
+<!--                    <h:outputScript>-->
+<!--                        function updateSpinner(step) {-->
+<!--                            var input = document.getElementById('hitInfo:r-value');-->
+<!--                            var currentValue = parseFloat(input.value);-->
+<!--                            var newValue = currentValue + step;-->
+<!--                            input.value = newValue.toFixed(1);-->
+<!--                        }-->
+<!--                    </h:outputScript>-->
+
+<!--                    <div>-->
+<!--                        <button type="button" class="spinner-button" onclick="updateSpinner(0.1)">+</button>-->
+<!--                        <button type="button" class="spinner-button" onclick="updateSpinner(-0.1)">-</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+                <h:commandButton id="tryHit" value="Submit" action="#{resultManager.addResults(userRequest)}">
+                    <f:ajax execute="@form" render="results-table"/>
+<!--                    <f:ajax execute="#{svgBean.updateSVG(resultManager.results.get(0))}" render="graph-svg"/>-->
+                </h:commandButton>
+
+            </h:form>
+        </div>
+
+    </div>
+
+    <div id="results-div">
+        <h:panelGroup>
+            <h:dataTable
+                    id="results-table"
+                    value="${resultManager.results}"
+                    var="result"
+            >
+                <h:column>
+                    <f:facet name="header">X</f:facet>
+                    #{result.x}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Y</f:facet>
+                    #{result.y}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">R</f:facet>
+                    #{result.r}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
+                    #{result.status}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Request time</f:facet>
+                    #{result.requestTime}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Script time</f:facet>
+                    #{result.scriptTime}
+                </h:column>
+
+            </h:dataTable>
+        </h:panelGroup>
+    </div>
+
+    <h:form id="toMain">
+        <h:commandButton id="toMainButton" value="Перейти на cтартовую страницу"  action="/index.xhtml?faces-redirect=true"/>
+    </h:form>
+
+    <h:outputScript library="dist" name="bundle.js" />
+</h:body>
+
+</html>
