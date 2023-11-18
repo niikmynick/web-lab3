@@ -1,10 +1,12 @@
 <svg id='graphSVG' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' width='400' height='400'>
       <!-- Scopes -->
-      <polygon class='figure' points='200,200 200,150 300,200' fill='#ADD8E6' />
-      <rect class='figure' x='200' y='200' width='100' height='50' fill='#ADD8E6' />
-      <circle class='figure' cx='200' cy='200' r='100' fill='#ADD8E6' mask='url(#mask)' />
+      <polygon class='figure' points='200,200 200,150 150,200' fill='#ADD8E6' />
+
+      <rect class='figure' x='200' y='200' width='100' height='100' fill='#ADD8E6' />
+
+      <circle class='figure' cx='200' cy='200' r='50' fill='#ADD8E6' mask='url(#mask)' />
       <mask id='mask'>
-        <rect x='0' y='0' width='200' height='200' fill='#FFFFFF' />
+        <rect x='200' y='0' width='200' height='200' fill='#FFFFFF' />
       </mask>
 
       <!-- X-axis -->
