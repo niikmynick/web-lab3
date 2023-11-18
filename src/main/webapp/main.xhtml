@@ -148,6 +148,18 @@
             </h:form>
         </div>
 
+        <h:form id="hitInfoHidden" style="display: none;">
+            <h:inputHidden id="x-value-hidden" value="${userRequest.x}"/>
+
+            <h:inputHidden id="y-value-hidden" value="${userRequest.y}"/>
+
+            <h:inputHidden id="r-value-hidden" value="${userRequest.r}"/>
+
+            <h:commandButton id="tryHitHidden" value="Submit" action="#{resultManager.addResultFromGraph(userRequest)}">
+                <f:ajax execute="@form" render="results-table"/>
+            </h:commandButton>
+        </h:form>
+
     </div>
 
     <div id="results-div">
