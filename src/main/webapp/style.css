@@ -62,7 +62,7 @@ input[type="text"],
 select {
     width: 80%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
@@ -163,20 +163,65 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-.clock {
+main {
+    background-color: #333;
+    height: 92vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 92vh;
-    background-color: #333; /* Цвет фона */
-    color: #fff; /* Цвет текста */
-    font-size: 2em; /* Размер шрифта */
+    position: relative;
 }
 
-/* Оформление текста часов */
+.clock {
+    color: #fff;
+    font-size: 2em;
+}
+
 #clockText {
     font-family: "Arial", sans-serif;
     font-weight: bold;
     font-size: xxx-large;
-    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7); /* Тень текста */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+}
+
+.toMainDiv {
+    position: absolute;
+    bottom: 10px;
+    display: inline-block;
+}
+
+.toMain {
+    color: #fff;
+    font-size: 2em;
+}
+
+#toMainButton {
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    font-size: xxx-large;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+}
+
+
+.spinner-button {
+    display: block;
+    /*margin-bottom: 10px;*/
+    /*padding: 8px;*/
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+}
+
+.r-value {
+    margin-right: 10px;
 }
