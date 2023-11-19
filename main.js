@@ -9,9 +9,25 @@ let input_Y = document.getElementById('hitInfo:y-value')
 
 let input_X = document.getElementById('choiceX')
 
-const submitButton = document.getElementById('hitInfo:tryHit')
+let submitButton = document.getElementById('hitInfo:tryHit')
 
 let svg = document.getElementById("graphSVG");
+let svgInitData = document.getElementById("graphSVG").innerHTML;
+let svgLastData = document.getElementById("graphSVG").innerHTML;
+
+let dataTableDiv = document.getElementById('results-div')
+let mouseOnTable = false
+
+let clearDiv = document.getElementById('clearDiv')
+let isClearing = false
+
+let clickedRow = undefined;
+
+
+if (document.getElementsByClassName('clickable-row').length !== 0) {
+    clearDiv.style.display = 'block'
+    dataTableDiv.style.padding = '20px 20px 0 20px'
+}
 
 increaseButton_R.addEventListener('click', () => {
     let xValues = getXValues()
@@ -51,9 +67,75 @@ svg.addEventListener('click', function (event) {
     hiddenR.value = r
 
     hiddenSubmitButton.click()
+
+    svgLastData = svg.innerHTML
+
+    clearDiv.style.display = 'block'
+    dataTableDiv.style.padding = '20px 20px 0 20px'
+    isClearing = false
 });
 
 submitButton.addEventListener('click', () => {
     let xValues = getXValues()
     safeNewDraw(xValues, input_Y.value, input_R.value)
+    svgLastData = svg.innerHTML
+
+    clearDiv.style.display = 'block'
+    dataTableDiv.style.padding = '20px 20px 0 20px'
+    isClearing = false
 })
+
+dataTableDiv.addEventListener('click', function (event) {
+    let target = event.target
+    if (target.tagName === 'TD') {
+
+        clickedRow = target
+
+        let x = parseFloat(target.parentNode.childNodes[1].innerText)
+        let y = parseFloat(target.parentNode.childNodes[3].innerText)
+        let r = parseFloat(target.parentNode.childNodes[5].innerText)
+
+        if (isNaN(x) || isNaN(y) || isNaN(r) || isClearing) {
+            return
+        }
+
+        target.parentNode.style.backgroundColor = '#c8e1ff'
+
+        if (!mouseOnTable) {
+            svgLastData = svg.innerHTML
+            mouseOnTable = true
+            svg.innerHTML = svgInitData
+            drawNewPoint(x, y, r)
+        } else {
+            drawNewPoint(x, y, r)
+        }
+    }
+})
+
+dataTableDiv.addEventListener('dblclick', function (event) {
+    let target = event.target
+
+    if (target.tagName === 'TD') {
+        clearSelection()
+    }
+})
+
+clearDiv.addEventListener('click', function () {
+    isClearing = true
+    svg.innerHTML = svgInitData
+    svgLastData = svgInitData
+
+    clearDiv.style.display = 'none'
+    dataTableDiv.style.padding = '20px'
+})
+
+function clearSelection() {
+    for (let i of document.getElementsByClassName('clickable-row')) {
+        i.style.backgroundColor = '#f9f9f9'
+    }
+
+    svg.innerHTML = svgLastData
+    mouseOnTable = false
+
+    clickedRow = undefined
+}
