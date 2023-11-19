@@ -101,7 +101,7 @@ public class CheckAreaDAOImpl implements CheckAreaDAO {
         }
     }
 
-    public final String TABLE_NAME = "results";
+    public final String TABLE_NAME = "result";
     @Override
     public void clearResults() throws SQLException {
         Session session = null;
