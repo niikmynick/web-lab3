@@ -23,7 +23,6 @@ public class ResultManager {
             results = new LinkedList<>(DAOFactory.getInstance().getResultDAO().getAllResults());
         } catch (SQLException ex) {
             System.err.println("Something went wrong when trying add new result to DB: " + ex);
-
         }
     }
 
@@ -112,5 +111,15 @@ public class ResultManager {
         }
 
         results.addFirst( currentResult );
+    }
+
+    @Transactional
+    public void clearResults() {
+        results.clear();
+        try {
+            DAOFactory.getInstance().getResultDAO().clearResults();
+        } catch (SQLException ex) {
+            System.err.println("Something went wrong when trying add new result to DB: " + ex);
+        }
     }
 }
