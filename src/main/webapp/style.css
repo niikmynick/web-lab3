@@ -99,7 +99,7 @@ input[type="submit"] {
 
 #results-div {
     margin-top: 20px;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     border-radius: 30px;
@@ -165,8 +165,7 @@ input[type="submit"] {
 }
 
 main {
-    background-color: #333;
-    height: 92vh;
+    height: 84vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,13 +184,16 @@ main {
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
 }
 
-.toMainDiv {
-    position: absolute;
+#toMainDiv {
     bottom: 10px;
-    display: inline-block;
+    margin: 10px;
 }
 
-.toMain {
+#clearDiv {
+    margin: 10px;
+}
+
+#toMain {
     color: #fff;
     font-size: 2em;
 }
