@@ -22,6 +22,8 @@
 
 <h:body>
 
+    <ui:include src="header.html" />
+
     <div class="top-div">
 
         <div class="graph-div" id="graph-svg">
@@ -168,6 +170,7 @@
                     id="results-table"
                     value="${resultManager.results}"
                     var="result"
+                    rowClasses="clickable-row"
             >
                 <h:column>
                     <f:facet name="header">X</f:facet>
@@ -201,11 +204,22 @@
 
             </h:dataTable>
         </h:panelGroup>
+
+        <div id="clearDiv" style="display: none">
+            <h:form id="clearResults">
+                <h:commandButton id="clearButton" value="Очистить историю" action="#{resultManager.clearResults()}">
+                    <f:ajax execute="@form" render="results-table"/>
+                </h:commandButton>
+            </h:form>
+        </div>
+
     </div>
 
-    <h:form id="toMain">
-        <h:commandButton id="toMainButton" value="Перейти на cтартовую страницу"  action="/index.xhtml?faces-redirect=true"/>
-    </h:form>
+    <div id="toMainDiv">
+        <h:form id="toMain">
+            <h:commandButton id="toMainButton" value="Перейти на cтартовую страницу"  action="/index.xhtml?faces-redirect=true"/>
+        </h:form>
+    </div>
 
     <h:outputScript library="dist" name="bundle.js" />
 </h:body>
