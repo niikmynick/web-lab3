@@ -6,7 +6,6 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class SVGBean {
-//    get svg from file
     private String SVG = """
         <svg id="graphSVG" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
               <!-- Scopes -->
