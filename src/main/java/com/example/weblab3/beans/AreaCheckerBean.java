@@ -34,7 +34,7 @@ public class AreaCheckerBean {
 
     @Column(name = "x")
     public double getX() {
-        return x;
+        return Math.round(x * 100.0) / 100.0;
     }
 
     public void setX(double x) {
@@ -43,7 +43,7 @@ public class AreaCheckerBean {
 
     @Column(name = "y")
     public double getY() {
-        return y;
+        return Math.round(y * 100.0) / 100.0;
     }
 
     public void setY(double y) {
