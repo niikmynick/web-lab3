@@ -164,6 +164,30 @@
 
     </div>
 
+    <div>
+        <h:form id="chooseSorting">
+            <div>
+                <h:selectOneMenu id="field" value="#{sortingHandler.field}">
+                    <f:selectItem itemValue="x" itemLabel="X"/>
+                    <f:selectItem itemValue="y" itemLabel="Y"/>
+                    <f:selectItem itemValue="r" itemLabel="R"/>
+                </h:selectOneMenu>
+
+                <h:selectOneMenu id="operator" value="#{sortingHandler.operator}">
+                    <f:selectItem itemValue="less" itemLabel="less"/>
+                    <f:selectItem itemValue="greater" itemLabel="greater"/>
+                    <f:selectItem itemValue="equal" itemLabel="equal"/>
+                </h:selectOneMenu>
+
+                <h:inputText id="value" value="${sortingHandler.value}"/>
+            </div>
+
+            <h:commandButton id="send" value="Submit" action="#{resultManager.updateResultsWithSorting(sortingHandler.field, sortingHandler.operator, sortingHandler.value)}">
+                <f:ajax execute="@form" render="results-table"/>
+            </h:commandButton>
+        </h:form>
+    </div>
+
     <div id="results-div">
         <h:panelGroup>
             <h:dataTable
@@ -199,7 +223,7 @@
 
                 <h:column>
                     <f:facet name="header">Script time</f:facet>
-                    #{result.scriptTime} ms
+                    #{result.scriptTime} ns
                 </h:column>
 
             </h:dataTable>

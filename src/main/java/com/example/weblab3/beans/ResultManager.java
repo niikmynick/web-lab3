@@ -40,7 +40,7 @@ public class ResultManager {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
         String requestTime = dateFormat.format(new Date(System.currentTimeMillis()));
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
 
         ArrayList<Hit> hits = new ArrayList<>();
 
@@ -101,7 +101,7 @@ public class ResultManager {
         currentResult.setStatus( AreaChecker.isHit(hit.getX(), hit.getY(), hit.getR()) );
 
         currentResult.setRequestTime( requestTime );
-        currentResult.setScriptTime( System.currentTimeMillis() - startTime );
+        currentResult.setScriptTime( System.nanoTime() - startTime );
 
         System.out.println(currentResult);
         try {
@@ -118,6 +118,15 @@ public class ResultManager {
         results.clear();
         try {
             DAOFactory.getInstance().getResultDAO().clearResults();
+        } catch (SQLException ex) {
+            System.err.println("Something went wrong when trying add new result to DB: " + ex);
+        }
+    }
+
+    @Transactional
+    public void updateResultsWithSorting(String field, String operator, double value) {
+        try {
+            results = new LinkedList<>(DAOFactory.getInstance().getResultDAO().getSortedResults(field, operator, value));
         } catch (SQLException ex) {
             System.err.println("Something went wrong when trying add new result to DB: " + ex);
         }

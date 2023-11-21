@@ -10,6 +10,7 @@ public interface CheckAreaDAO {
     void updateResult(Long bus_id, AreaCheckerBean result) throws SQLException;
     AreaCheckerBean getResultById(Long result_id) throws SQLException;
     Collection<AreaCheckerBean> getAllResults() throws SQLException;
+    Collection<AreaCheckerBean> getSortedResults(String field, String operator, double value) throws SQLException;
     void deleteResult(AreaCheckerBean result) throws SQLException;
     void clearResults() throws SQLException;
 }

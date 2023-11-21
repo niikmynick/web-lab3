@@ -30,4 +30,9 @@
 
     </navigation-rule>
 
+    <validator>
+        <validator-id>hitsSorter</validator-id>
+        <validator-class>com.example.weblab3.validators.HitsSorter</validator-class>
+    </validator>
+
 </faces-config>

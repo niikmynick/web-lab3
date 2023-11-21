@@ -1,6 +1,8 @@
 package com.example.weblab3.dbUtils;
 
 import com.example.weblab3.beans.AreaCheckerBean;
+import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 
@@ -72,6 +74,39 @@ public class CheckAreaDAOImpl implements CheckAreaDAO {
             var criteriaQuery = session.getCriteriaBuilder().createQuery(AreaCheckerBean.class);
             Root<AreaCheckerBean> root = criteriaQuery.from(AreaCheckerBean.class);
             results = session.createQuery(criteriaQuery.select(root)).getResultList();
+        } catch (Throwable e) {
+            System.err.println("DAO error occurred: " + e);
+            throw new SQLException(e);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public Collection<AreaCheckerBean> getSortedResults(String field, String operator, double value) throws SQLException {
+        Session session = null;
+        List<AreaCheckerBean> results;
+        try {
+            session = HibernateUtils.getFactory().openSession();
+            var criteriaQuery = session.getCriteriaBuilder().createQuery(AreaCheckerBean.class);
+            Root<AreaCheckerBean> root = criteriaQuery.from(AreaCheckerBean.class);
+
+            results = switch (operator) {
+                case "greater" -> session.createQuery(criteriaQuery.select(root).where(
+                        session.getCriteriaBuilder().gt(root.get(field), value)
+                )).getResultList();
+                case "equal" -> session.createQuery(criteriaQuery.select(root).where(
+                        session.getCriteriaBuilder().equal(root.get(field), value)
+                )).getResultList();
+                case "less" -> session.createQuery(criteriaQuery.select(root).where(
+                        session.getCriteriaBuilder().lt(root.get(field), value)
+                )).getResultList();
+                default -> session.createQuery(criteriaQuery.select(root)).getResultList();
+            };
+
         } catch (Throwable e) {
             System.err.println("DAO error occurred: " + e);
             throw new SQLException(e);
